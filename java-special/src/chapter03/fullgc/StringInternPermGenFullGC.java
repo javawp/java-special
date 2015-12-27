@@ -1,6 +1,7 @@
 package chapter03.fullgc;
 
-
+import java.util.ArrayList;
+import java.util.List;
 
 public class StringInternPermGenFullGC {
 
@@ -9,10 +10,11 @@ public class StringInternPermGenFullGC {
 	 * 运行方式为java -XX:+PrintGCDetials -XX:PermSize10m -XX:MaxPermSize=10m chapter3.fullgc.StringInternPermGenFullGC
 	 * @param args
 	 */
-	public static void main(String []args) {
+	public static void main(String[] args) {
 		int i = 0;
-		while(true) {
-			("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF" + i++).intern();
+		List<String> list = new ArrayList<>();
+		while (true) {
+			list.add(("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF" + i++).intern());
 		}
 
 	}
