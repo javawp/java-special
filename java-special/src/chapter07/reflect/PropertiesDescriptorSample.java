@@ -27,10 +27,20 @@ public class PropertiesDescriptorSample {
 	}
 
 	static class Node {
-		
+
 		private String name;
-		
+
 		private String email;
+
+		private boolean flag;
+
+		public boolean isFlag() {
+			return flag;
+		}
+
+		public void setFlag(boolean flag) {
+			this.flag = flag;
+		}
 
 		public String getName() {
 			return name;
@@ -47,5 +57,6 @@ public class PropertiesDescriptorSample {
 		public void setEmail(String email) {
 			this.email = email;
 		}
+
 	}
 }
