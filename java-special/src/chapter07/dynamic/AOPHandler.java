@@ -26,7 +26,7 @@ public class AOPHandler implements InvocationHandler {
 	public Object invoke(Object proxyed, Method method, Object[] args)
 			throws IllegalArgumentException, IllegalAccessException,
 			InvocationTargetException {
-		//System.out.println(method.getDeclaringClass());
+		System.out.println(method.getDeclaringClass());
 		System.out.println("\n\n====>调用方法名：" + method.getName());
 		Class<?>[] variables = method.getParameterTypes();
 		System.out.println("\n\t参数类型列表：\n");
