@@ -29,6 +29,15 @@ public class ConvertionService {
         return fieldList;
 	}
 	
+	/**
+	 * 假设已经从数据库获取到一行数据,并得到一个Map对象,这个Map对象的Key就是数据库字段,而Value就是表中的值.<br>
+	 * 因此这段公共程序的入口参数应当是这个Map对象, 返回的是UserDO
+	 * @param row Map对象
+	 * @param clazz 返回对象的类型
+	 * @return 
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 */
 	@SuppressWarnings("unchecked")
 	public static <T> T convertMapToBean(Map<String , String>row , Class<T>clazz) 
 				throws InstantiationException, IllegalAccessException {

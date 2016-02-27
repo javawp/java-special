@@ -9,7 +9,7 @@ public class TestMain {
 
 	public static void main(String []args)
 			throws InstantiationException, IllegalAccessException {
-		@SuppressWarnings({ "unchecked", "serial" })
+		@SuppressWarnings("serial")
 		List<HashMap<String , String>>list = Arrays.asList(
 				new HashMap<String , String>() {
 					{
