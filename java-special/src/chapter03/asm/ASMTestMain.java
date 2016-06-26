@@ -12,29 +12,37 @@ import org.objectweb.asm.ClassWriter;
 public class ASMTestMain {
 	
 	private final static DynamicClassLoader TEST_CLASS_LOADER = new DynamicClassLoader(
-			(URLClassLoader)ASMTestMain.class.getClassLoader()
-	);
+			(URLClassLoader) ASMTestMain.class.getClassLoader());
 
 	public static void main(String []args) 
 			throws ClassNotFoundException, IOException, InstantiationException, 
 			       IllegalAccessException, IllegalArgumentException, SecurityException, 
 			       InvocationTargetException, NoSuchMethodException {
 		//在字节码增强前记录一个Class
-		Class <?>beforeASMClass = TEST_CLASS_LOADER.loadClass("chapter03.asm.ForASMTestClass");
+		Class<?> beforeASMClass = TEST_CLASS_LOADER.loadClass("chapter03.asm.ForASMTestClass");
 		
 		//我们重新装载修改后的类
 		TEST_CLASS_LOADER.defineClassByByteArray("chapter03.asm.ForASMTestClass", asmChangeClassCall());
-		Class <?>afterASMClass = TEST_CLASS_LOADER.loadClass("chapter03.asm.ForASMTestClass");
+		Class<?> afterASMClass = TEST_CLASS_LOADER.loadClass("chapter03.asm.ForASMTestClass");
 		
-		//分别通过新老class创建对象
+		// 分别通过新老class创建对象
 		Object beforeObject = beforeASMClass.newInstance();
 		Object afterObject = afterASMClass.newInstance();
 		
 		//分表调用它们的代码
 		System.out.println("**************** 原始的ForASMTestClass *******************");
 		beforeASMClass.getMethod("display1").invoke(beforeObject);
+		beforeASMClass.getMethod("display2").invoke(beforeObject);
+		System.out.println("beforeObject 类加载器: " + beforeObject.getClass().getClassLoader());
 		System.out.println("**************** 字节码增强的ForASMTestClass *******************");
 		afterASMClass.getMethod("display1").invoke(afterObject);
+		System.out.println("afterObject 类加载器: " + afterObject.getClass().getClassLoader());
+		
+		/**
+		 *  Exception in thread "main" java.lang.NoSuchMethodException: chapter03.asm.ForASMTestClass.display2()
+		 *  修改后的类调用display2(), 没有这个方法, 因为我们屏蔽了这个方法
+		 */
+		// afterASMClass.getMethod("display2").invoke(afterObject);
 	}
 	
 	@SuppressWarnings("resource")

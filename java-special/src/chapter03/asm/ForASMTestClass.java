@@ -7,10 +7,12 @@ public class ForASMTestClass {
 	private String value;
 	
 	public void display1() {
-		System.out.println("******************* display1() 开始调用 *********************");
-		System.out.println(name);
-		System.out.println(value);
+		System.out.println(">>>>>>>>>>>>>>> 我是display1()方法 <<<<<<<<<<<<<<");
+		System.out.println("name = " + name);
+		System.out.println("value = " + value);
 	}
 
-	public void display2() {}
+	public void display2() {
+		System.out.println(">>>>>>>>>>>>>>> 我是display2()方法 <<<<<<<<<<<<<<");
+	}
 }
