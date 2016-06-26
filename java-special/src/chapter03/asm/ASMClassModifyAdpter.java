@@ -20,12 +20,12 @@ public class ASMClassModifyAdpter extends ClassAdapter {
 			MethodVisitor methodVisitor = cv.visitMethod(access, methodName, desc, signature, exceptions);
 			methodVisitor.visitCode();
 			//增加的语句等价于增加代码：name = "我是name"
-			methodVisitor.visitVarInsn(Opcodes.ALOAD , 0);
+			methodVisitor.visitVarInsn(Opcodes.ALOAD , 0); // aload_0 is supposed to push 'this' on to the stack
 			methodVisitor.visitLdcInsn("我是name");
 			methodVisitor.visitFieldInsn(Opcodes.PUTFIELD , "chapter03/asm/ForASMTestClass" , "name" , "Ljava/lang/String;");
 			
 			//这条语句等价于增加代码：value = "我是value";
-			methodVisitor.visitVarInsn(Opcodes.ALOAD , 0);
+			methodVisitor.visitVarInsn(Opcodes.ALOAD , 0); // aload_0 is supposed to push 'this' on to the stack
 			methodVisitor.visitLdcInsn("我是value");
 			methodVisitor.visitFieldInsn(Opcodes.PUTFIELD , "chapter03/asm/ForASMTestClass" , "value" , "Ljava/lang/String;");
 			
