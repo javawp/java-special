@@ -16,6 +16,9 @@ public class ClassLoaderTest {
             String classname = "com.javawp.ReadChannel";  
             Class<?> clazz = networkClassLoader.loadClass(classname);  
             System.out.println(clazz.getClassLoader());  
+            
+            System.out.println("查找jar包对应的class路径: " + clazz.getResource("/net/sf/cglib/proxy/InvocationHandler.class").getPath());
+            System.out.println("根据类名查找jar包对应的路径: " + net.sf.cglib.proxy.InvocationHandler.class.getResource("").getPath());
 
         } catch (Exception e) {  
             e.printStackTrace();  
