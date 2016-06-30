@@ -7,6 +7,7 @@ public class StringInternPermGenOOM {
 
 	/**
 	 * 请在命令行下运行
+	 * 运行方式: -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+UseParallelOldGC
 	 * 运行方式：java -XX:PermSize10m -XX:MaxPermSize=10m chapter3.fullgc.StringInternPermGenFullGC
 	 * 
 	 * @param args

@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GCOverHead {
-	/*这里先占用掉Old区超过14M的空间*/
+	
+	// -XX:+PrintGCDetails -Xmn5m -Xms20m -Xmx20m
+	// 这里先占用掉Old区超过12M的空间
 	public final static byte[] DEFAULT_BYTES = new byte[12 * 1024 * 1024];
 	
 	public static void main(String []args) {	
