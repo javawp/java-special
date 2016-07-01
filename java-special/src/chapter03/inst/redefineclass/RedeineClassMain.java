@@ -22,7 +22,7 @@ public class RedeineClassMain {
 
 	private static byte[] convertByteCode() throws NotFoundException,
 			CannotCompileException, IOException {
-		CtClass ctClass = ClassPool.getDefault().get("chapter3.asm.ForASMTestClass");
+		CtClass ctClass = ClassPool.getDefault().get("chapter03.asm.ForASMTestClass");
 		CtMethod ctMethod = ctClass.getDeclaredMethod("display1");
 		ctMethod.insertBefore("{ System.out.println(\"前面加一条呀！\"); }");
 		ctMethod.insertAfter(
