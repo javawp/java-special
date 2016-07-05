@@ -16,8 +16,11 @@ public class FileSender extends BFileSender {
 
 	public FileSender(String[] tokens) throws IOException {
 		super(tokens);
-		this.charsetByte = Commons
-			.getCharsetByteByName(getCharset(tokens[2]));
+		if (tokens.length >= minLength) {
+			this.charsetByte = Commons.getCharsetByteByName(getCharset(tokens[2]));
+		} else {
+			throw new RuntimeException("消息格式存在问题，请使用help命令查看输入格式。");
+		}
 	}
 	
 	private String getCharset(String token) {
