@@ -18,7 +18,7 @@ public class ClientMain {
 					SocketWrapper socketWrapper = null;
 					FileOutputStream stream = null;
 					try {
-						stream = new FileOutputStream("c:/temp/aaa" + num +".pdf");
+						stream = new FileOutputStream("/Users/wangpeng/Documents/dir/aaa" + num +".pdf");
 						socketWrapper = new SocketWrapper("localhost" , 8888);
 					
 						println("已经连接上服务器端.....");

@@ -9,7 +9,7 @@ import java.nio.channels.FileChannel;
 
 public class DownloadFileProcessor implements Closeable {
 
-	private final static String FILE_PTH = "d:/javaA/upload/Hadoop.PDF";
+	private final static String FILE_PTH = "/Users/wangpeng/Downloads/hibernate_reference.PDF";
 	
 	private FileChannel fileChannel;
 	
