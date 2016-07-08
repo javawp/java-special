@@ -11,9 +11,9 @@ import java.nio.file.Paths;
 public class AIOFileReadWrite {
 
 	public static void main(String []args) throws IOException {
-		AsynchronousFileChannel readChannel = AsynchronousFileChannel.open(Paths.get("d:/heapdump-1369466068728.hprof"));
+		AsynchronousFileChannel readChannel = AsynchronousFileChannel.open(Paths.get("/Users/wangpeng/Downloads/hibernate_reference.PDF"));
 		//AsynchronousFileChannel.open(file, options, executor, attrs)
-		FileChannel writeChannel = new FileOutputStream("d:/heapdump-1369466068728.hprof").getChannel();
+		FileChannel writeChannel = new FileOutputStream("/Users/wangpeng/Documents/dir/hibernate_reference.PDF").getChannel();
 		ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
 		FileReadCompletion completion = new FileReadCompletion(byteBuffer , readChannel);
 		readChannel.read(byteBuffer, 0l , writeChannel , completion);
