@@ -16,7 +16,7 @@ public class ThreadDaemonTest {
 		A a = new A();
 		
 		public void run() {
-			a.setDaemon(true);
+			a.setDaemon(true); // 只剩后台线程, 结束整个进程
 			a.start();
 			System.out.println("B is end....");
 		}
@@ -26,6 +26,6 @@ public class ThreadDaemonTest {
 		B b = new B();
 		b.start();
 		Thread.sleep(1000);
-		System.out.println(b.a.getState());//输出RUNNING，说明还未结束
+		System.out.println(b.a.getState());
 	}
 } 
