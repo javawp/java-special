@@ -31,12 +31,15 @@ public class ThreadJoinTest {
 	private final static int COUNTER = 100000001;
 	
 	public static void main(String []args) throws InterruptedException {
+		// 先设置100万的随机数
 		int []array = new int[COUNTER];
 		Random random = new Random();
 		for(int i = 0 ; i < COUNTER ; i++) {
 			array[i] = Math.abs(random.nextInt());
 		}
 		long start = System.currentTimeMillis();
+		
+		// 分发到两个小任务
 		Computer c1 = new Computer(array , 0 , COUNTER / 2);
 		Computer c2 = new Computer(array , (COUNTER / 2) + 1 , COUNTER);
 		c1.start();
@@ -44,7 +47,6 @@ public class ThreadJoinTest {
 		c1.join();
 		c2.join();
 		System.out.println(System.currentTimeMillis() - start);
-		//System.out.println(c1.getResult());
 		System.out.println((c1.getResult() + c2.getResult()) & Integer.MAX_VALUE);
 	}
 }
