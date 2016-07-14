@@ -23,7 +23,7 @@ public class AtomicStampedReferenceTest {
 	 * @see AtomicStampedReference#getStamp() 返回版本
 	 * @see AtomicStampedReference#get(int[]) 传入一个数组，返回数组的0号元素为版本号
 	 */
-	public final static AtomicStampedReference <String>ATOMIC_REFERENCE = new AtomicStampedReference<String>("abc" , 0);
+	public final static AtomicStampedReference<String> ATOMIC_REFERENCE = new AtomicStampedReference<String>("abc", 0);
 	
 	private final static Random RANDOM_OBJECT = new Random();
 
@@ -35,7 +35,8 @@ public class AtomicStampedReferenceTest {
 			threads[i] = new Thread() {
 				public void run() {
 					String oldValue = ATOMIC_REFERENCE.getReference();
-					int stamp = ATOMIC_REFERENCE.getStamp();
+					int stamp = ATOMIC_REFERENCE.getStamp(); // 版本
+					System.out.println("我是线程：" + num + ", 旧值为: " + oldValue);
 					try {
 						startCountDownLatch.await();
 					} catch (InterruptedException e) {
@@ -46,8 +47,9 @@ public class AtomicStampedReferenceTest {
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
-					if(ATOMIC_REFERENCE.compareAndSet(oldValue , oldValue + num , stamp , stamp + 1)) {
-						System.out.println("我是线程：" + num + ",我获得了锁进行了对象修改！");
+					if (ATOMIC_REFERENCE.compareAndSet(oldValue, oldValue + num, stamp, stamp + 1)) {
+						System.out.println("我是线程：" + num + ", 我获得了锁进行了对象修改！新值为: " + ATOMIC_REFERENCE.getReference()
+								+ ", 旧版本为: [" + stamp + "] , 新版本为: [" + ATOMIC_REFERENCE.getStamp() + "]");
 					}
 				}
 			};
@@ -63,8 +65,9 @@ public class AtomicStampedReferenceTest {
 					e.printStackTrace();
 				}
 				int stamp = ATOMIC_REFERENCE.getStamp();
-				while(!ATOMIC_REFERENCE.compareAndSet(ATOMIC_REFERENCE.getReference(), "abc" , stamp , stamp + 1));
-				System.out.println("已经改为原始值！" + ATOMIC_REFERENCE.getReference() + ", 但是, 版本号为: " + ATOMIC_REFERENCE.getStamp());
+				while (!ATOMIC_REFERENCE.compareAndSet(ATOMIC_REFERENCE.getReference(), "abc", stamp, stamp + 1));
+				System.out.println("已经改为原始值！" + ATOMIC_REFERENCE.getReference() + ", 旧版本为: [" + stamp + "] 新版本为: ["
+						+ ATOMIC_REFERENCE.getStamp() + "]");
 			}
 		}.start();
 	}
