@@ -1,5 +1,7 @@
 package chapter05.atomic.updater;
 
+import java.util.Random;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicIntegerFieldUpdater;
 
 public class AtomicIntegerFieldUpdaterTest {
@@ -24,19 +26,40 @@ public class AtomicIntegerFieldUpdaterTest {
 	 * @see AtomicIntegerFieldUpdater#getAndIncrement(Object)
 	 * @see AtomicIntegerFieldUpdater#getAndSet(Object, int)
 	 */
-	public final static AtomicIntegerFieldUpdater <A>ATOMIC_INTEGER_UPDATER = AtomicIntegerFieldUpdater.newUpdater(A.class, "intValue");
+	public final static AtomicIntegerFieldUpdater<A> ATOMIC_INTEGER_UPDATER = AtomicIntegerFieldUpdater.newUpdater(A.class, "intValue");
 	
-	public static void main(String []args) {
-		final A a = new A();
-		for(int i = 0 ; i < 100 ; i++) {
+	private final static Random RANDOM_OBJECT = new Random();
+	
+	public static void main(String[] args) throws InterruptedException {
+		final A a = new A(); // 操作同一个对象
+		final CountDownLatch startCountDownLatch = new CountDownLatch(1);
+		Thread[] threads = new Thread[100];
+
+		for (int i = 0; i < 100; i++) {
 			final int num = i;
-			new Thread() {
+			threads[i] = new Thread() {
 				public void run() {
-					if(ATOMIC_INTEGER_UPDATER.compareAndSet(a, 100, 120)) {
-						System.out.println("我是线程：" + num + " 我对对应的值做了修改！");
+					int oldValue = ATOMIC_INTEGER_UPDATER.get(a); // 获取旧值
+					System.out.println("我是线程：" + num + ", 旧值为: " + oldValue);
+					try {
+						startCountDownLatch.await();
+						Thread.sleep(RANDOM_OBJECT.nextInt() & 1000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					if (ATOMIC_INTEGER_UPDATER.compareAndSet(a, 100, 120)) {
+						System.out.println("我是线程：" + num + " 我对对应的值做了修改！旧值为: [" + oldValue + "] , 新值为: ["
+								+ ATOMIC_INTEGER_UPDATER.get(a) + "]");
 					}
 				}
-			}.start();
+			};
+			threads[i].start();
 		}
+		Thread.sleep(200);
+		startCountDownLatch.countDown();
+		for (Thread thread : threads) {
+			thread.join();
+		}
+		System.out.println("最终结果为：[" + ATOMIC_INTEGER_UPDATER.get(a) + "]");
 	}
 }
