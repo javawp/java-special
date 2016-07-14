@@ -24,6 +24,7 @@ public class AtomicReferenceABATest {
 			threads[i] = new Thread() {
 				public void run() {
 					String oldValue = ATOMIC_REFERENCE.get();
+					System.out.println("我是线程：" + num + ", 旧值为: " + oldValue);
 					try {
 						startCountDownLatch.await();
 					} catch (InterruptedException e) {
@@ -35,7 +36,7 @@ public class AtomicReferenceABATest {
 						e.printStackTrace();
 					}
 					if(ATOMIC_REFERENCE.compareAndSet(oldValue , oldValue + num)) {
-						System.out.println("我是线程：" + num + ",我获得了锁进行了对象修改！");
+						System.out.println("我是线程：" + num + ",我获得了锁进行了对象修改！新值为: " + ATOMIC_REFERENCE.get());
 					}
 				}
 			};
@@ -50,8 +51,8 @@ public class AtomicReferenceABATest {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				while(!ATOMIC_REFERENCE.compareAndSet(ATOMIC_REFERENCE.get(), "abc"));
-				System.out.println("已经改为原始值！");
+				while (!ATOMIC_REFERENCE.compareAndSet(ATOMIC_REFERENCE.get(), "abc"));
+				System.out.println("已经改为原始值！" + ATOMIC_REFERENCE.get());
 			}
 		}.start();
 	}
