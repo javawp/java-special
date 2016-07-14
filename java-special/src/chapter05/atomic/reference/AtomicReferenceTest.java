@@ -35,6 +35,7 @@ public class AtomicReferenceTest {
 			threads[i] = new Thread() {
 				public void run() {
 					String oldValue = ATOMIC_REFERENCE.get();
+					System.out.println("我是线程：" + num + ", 旧值为: " + oldValue);
 					try {
 						startCountDownLatch.await();
 						Thread.sleep(RANDOM_OBJECT.nextInt() & 1000);
