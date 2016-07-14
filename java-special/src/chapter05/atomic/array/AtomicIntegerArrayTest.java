@@ -31,8 +31,10 @@ public class AtomicIntegerArrayTest {
 			final int threadNum = i;
 			threads[i] = new Thread() {
 				public void run() {
+					int origin = ATOMIC_INTEGER_ARRAY.get(index); // 原始值
 					int result = ATOMIC_INTEGER_ARRAY.addAndGet(index, index + 1);
-					System.out.println("线程编号为：" + threadNum + " , 对应的原始值为：" + (index + 1) + "，增加后的结果为：" + result);
+					System.out.println("线程编号为：" + threadNum + " , 对应的原始值为：" + origin + " , 增加的值为: " + (index + 1)
+							+ "，增加后的结果为：" + result + " , 数组[" + index + "]");
 				}
 			};
 			threads[i].start();
