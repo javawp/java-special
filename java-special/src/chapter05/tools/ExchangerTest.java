@@ -5,7 +5,7 @@ import java.util.concurrent.Exchanger;
 public class ExchangerTest {
 
 	public static void main(String []args) {
-		final Exchanger <Integer>exchanger = new Exchanger<Integer>();
+		final Exchanger<Integer> exchanger = new Exchanger<Integer>();
 		for(int i = 0 ; i < 10 ; i++) {
 			final Integer num = i;
 			new Thread() {
