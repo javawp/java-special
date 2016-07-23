@@ -30,20 +30,24 @@ public class FutureTaskTest {
 	}
 
 	public static void main(String []args) throws InterruptedException, ExecutionException {
+		
 		ExecutorService executorService = Executors.newFixedThreadPool(2);
-		@SuppressWarnings("unchecked")
-		List<Future<String>> list = Arrays.asList(
-			executorService.submit(new CallImpl("t1")) , 
-			executorService.submit(new CallImpl("t2")) ,
-			executorService.submit(new CallImpl("t3"))
-		);
-		/*List<Future<String>> list = executorService.invokeAll(Arrays.asList(
+		
+//		List<Future<String>> list = Arrays.asList(
+//			executorService.submit(new CallImpl("t1")) , 
+//			executorService.submit(new CallImpl("t2")) ,
+//			executorService.submit(new CallImpl("t3"))
+//		);
+		
+		// invokeAll调用, 内部做了isDone()自旋等待操作, 内部等待线程结束.
+		List<Future<String>> list = executorService.invokeAll(Arrays.asList(
 			new CallImpl("t1"),
 			new CallImpl("t2"),
 			new CallImpl("t3")
-		));*/
+		)); // 通过invokeAll得到的Future对象, 调用get方法, 不会阻塞.
+		
 		for(Future<String> future : list) {
-			String result = future.get();//如果没返回，会阻塞
+			String result = future.get(); // 逐个submit得到的Future对象, 如果没返回，会阻塞
 			System.out.println(result + "\t" + System.currentTimeMillis());
 		}
 		executorService.shutdown();

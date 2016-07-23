@@ -29,8 +29,9 @@ public class CompletionServiceTest {
 			});
 		}
 		for (int i = 0; i < 100; i++) {
+			// 使用CompletionService, 只有完成的Future才会放入到队列中, 否则take()不到Future.
 			Future<String> f = completionService.take();
-			System.out.println(f.get());
+			System.out.println(f.get()); // Future并不会阻塞
 		}
 		executorService.shutdown();
 	}
